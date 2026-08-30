@@ -1,0 +1,6 @@
+{
+  "name": "web-search",
+  "dependencies": {
+    "turndown": "^7.2.0"
+  }
+}

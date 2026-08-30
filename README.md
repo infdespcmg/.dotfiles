@@ -1,0 +1,16 @@
+# dotfiles
+
+## pi extensions
+
+`.pi/agent/extensions/web-search` — websearch/webfetch tools for pi (port of opencode's tools).
+
+Install on a new machine:
+
+```bash
+git clone https://github.com/infdespcmg/.dotfiles.git ~/.dotfiles
+mkdir -p ~/.pi/agent/extensions
+ln -s ~/.dotfiles/.pi/agent/extensions/web-search ~/.pi/agent/extensions/web-search
+cd ~/.pi/agent/extensions/web-search && npm install --omit=dev
+```
+
+Optional env: `PI_WEBSEARCH_PROVIDER` (`exa`|`parallel`), `EXA_API_KEY`, `PARALLEL_API_KEY`.
