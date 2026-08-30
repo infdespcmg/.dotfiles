@@ -120,7 +120,11 @@ export default function (pi: ExtensionAPI) {
 			if (res.status === 403 && res.headers.get("cf-mitigated") === "challenge") {
 				res = await doFetch("pi");
 			}
-			if (!res.ok) throw new Error(`Request failed: HTTP ${res.status}`);
+			if (!res.ok) {
+				// Include a snippet of the error body so the model can self-correct (bad params, missing key, etc.)
+				const detail = (await res.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 500).trim();
+				throw new Error(`Request failed: HTTP ${res.status}${detail ? ` — ${detail}` : ""}`);
+			}
 			const mime = (res.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
 			const buf = Buffer.from(await res.arrayBuffer());
 			if (buf.length > 5 * 1024 * 1024) throw new Error("Response too large (exceeds 5MB limit)");
